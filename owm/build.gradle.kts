@@ -1,9 +1,22 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
     kotlin("android")
+}
+
+var properties = Properties()
+var mapsKey: String = ""
+
+if (File("local.properties").exists()) {
+    properties = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
+    mapsKey = properties.getProperty("GOOGLE_MAPS_ANDROID_KEY")
+
+} else {
+    mapsKey = System.getenv("GOOGLE_MAPS_ANDROID_KEY")
 }
 
 android {
@@ -24,12 +37,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "GOOGLE_MAPS_ANDROID_KEY", "\"$mapsKey\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "GOOGLE_MAPS_ANDROID_KEY", "\"$mapsKey\"")
         }
     }
     compileOptions {
