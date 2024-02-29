@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "50574272132",
+    "project_id": "owmapi-22f32",
+    "storage_bucket": "owmapi-22f32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50574272132:android:be5e63637c2e059fa984d1",
+        "android_client_info": {
+          "package_name": "com.kryptopass.owmapi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm-WWzOCktrM7GR59RoYxpWEL1IDsFbPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
