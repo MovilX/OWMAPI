@@ -26,62 +26,57 @@ class RemoteWeatherDataSourceImplTest {
     private val service = mock<WeatherService>()
     private val dataSource = RemoteWeatherDataSourceImpl(service)
 
-    private val launchId = "Launch ID"
-    private val flightNumber = 1
+    private val city = "Zocca"
 
     @Test
     fun testGetWeatherList() = runTest {
-        val lat = 100.0
-        val lon = 100.0
-        val remoteLaunches = listOf(
+        val remoteLaunches =
             WeatherModel(
                 "Base", com.kryptopass.data.remote.networking.model.Clouds(), 1,
-                Coord(lat, lon), 2, 3, com.kryptopass.data.remote.networking.model.Main(),
-                "Name", com.kryptopass.data.remote.networking.model.Rain(),
+                Coord(), 2, 3, com.kryptopass.data.remote.networking.model.Main(),
+                city, com.kryptopass.data.remote.networking.model.Rain(),
                 com.kryptopass.data.remote.networking.model.Sys(), 4, 5, listOf(),
                 com.kryptopass.data.remote.networking.model.Wind()
             )
-        )
+
         val expectedLaunches = listOf(
             Weather(
-                "Base", Clouds(), 1, Coordinate(lat, lon), 2, 3, Main(),
-                "Name", Rain(), Sys(), 4, 5, listOf(), Wind()
+                "Base", Clouds(), 1, Coordinate(), 2, 3, Main(),
+                city, Rain(), Sys(), 4, 5, listOf(), Wind()
             )
         )
 
-        whenever(service.getWeatherList()).thenReturn(remoteLaunches)
-        val result = dataSource.getWeatherForLocationList().first()
+        whenever(service.getWeather()).thenReturn(remoteLaunches)
+        val result = dataSource.getWeather().first()
 
         assertEquals(expectedLaunches, result)
     }
 
     @Test
     fun testGetWeather() = runTest {
-        val lat = 100.0
-        val lon = 100.0
         val remoteWeather = WeatherModel(
             "Base", com.kryptopass.data.remote.networking.model.Clouds(), 1,
-            Coord(lat, lon), 2, 3, com.kryptopass.data.remote.networking.model.Main(),
-            "Name", com.kryptopass.data.remote.networking.model.Rain(),
+            Coord(), 2, 3, com.kryptopass.data.remote.networking.model.Main(),
+            city, com.kryptopass.data.remote.networking.model.Rain(),
             com.kryptopass.data.remote.networking.model.Sys(), 4, 5, listOf(),
             com.kryptopass.data.remote.networking.model.Wind()
         )
         val expectedWeather = Weather(
-            "Base", Clouds(), 1, Coordinate(lat, lon), 2, 3, Main(),
-            "Name", Rain(), Sys(), 4, 5, listOf(), Wind()
+            "Base", Clouds(), 1, Coordinate(), 2, 3, Main(),
+            city, Rain(), Sys(), 4, 5, listOf(), Wind()
         )
 
-        whenever(service.getWeather(lat, lon)).thenReturn(remoteWeather)
-        val result = dataSource.getWeatherForLocation(lat, lon).first()
+        whenever(service.getWeatherByLocation(city)).thenReturn(remoteWeather)
+        val result = dataSource.getWeatherCityAndCountryCode(city).first()
 
         assertEquals(expectedWeather, result)
     }
 
     @Test
     fun testGetWeatherListThrowsError() = runTest {
-        whenever(service.getWeatherList()).thenThrow(RuntimeException())
+        whenever(service.getWeather()).thenThrow(RuntimeException())
 
-        dataSource.getWeatherForLocationList().catch {
+        dataSource.getWeather().catch {
             TestCase.assertTrue(it is UseCaseException.WeatherException)
         }
     }

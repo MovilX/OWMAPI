@@ -10,8 +10,8 @@ interface WeatherService {
     // TODO: get last searched for user navigation
     // TODO: inject lat/lon
     @GET("2.5/weather?lat=44.34&lon=10.99&appid=${BuildConfig.OWM_API_KEY}")
-    suspend fun getWeatherList(): List<WeatherModel>
+    suspend fun getWeather(): WeatherModel
 
-    @GET("2.5/weather?lat=44.34&lon=10.99&appid=${BuildConfig.OWM_API_KEY}")
-    suspend fun getWeather(lat: Double?, lon: Double?): WeatherModel
+    @GET("2.5/weather?q=london,uk&appid=${BuildConfig.OWM_API_KEY}")
+    suspend fun getWeatherByLocation(cityAndCountryCode: String?): WeatherModel
 }

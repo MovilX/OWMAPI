@@ -16,29 +16,25 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
-class GetWeatherForLocationListUseCaseTest {
+class GetWeatherByCityAndCountryCodeUseCaseTest {
 
-    private val repository = mock<WeatherRepository>()
-
-    private val useCase = GetWeatherForLocationListUseCase(
+    private val repo = mock<WeatherRepository>()
+    private val useCase = GetWeatherByCityAndCountryCodeUseCase(
         mock(),
-        repository
+        repo
     )
 
     @Test
     fun testProcess() = runTest {
-        val weather1 = Weather(
-            "Base1", Clouds(), 1, Coordinate(), 2, 3, Main(), "Name1",
-            Rain(), Sys(), 4, 5, listOf(), Wind()
-        )
-        val weather2 = Weather(
+        val request = GetWeatherByCityAndCountryCodeUseCase.Request("City1")
+        val weather = Weather(
             "Base2", Clouds(), 6, Coordinate(), 7, 8, Main(), "Name1",
             Rain(), Sys(), 9, 10, listOf(), Wind()
         )
 
-        whenever(repository.getWeatherForLocationList()).thenReturn(flowOf(listOf(weather1, weather2)))
-        val response = useCase.process(GetWeatherForLocationListUseCase.Request).first()
+        whenever(repo.getWeatherByCityAndCountryCode(request.cityAndCountryCode)).thenReturn(flowOf(weather))
+        val response = useCase.process(request).first()
 
-        assertEquals(GetWeatherForLocationListUseCase.Response(listOf(weather1, weather2)), response)
+        assertEquals(GetWeatherByCityAndCountryCodeUseCase.Response(weather), response)
     }
 }

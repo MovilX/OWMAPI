@@ -22,18 +22,16 @@ class RemoteWeatherDataSourceImpl @Inject constructor(
     private val service: WeatherService
 ) : RemoteWeatherDataSource {
 
-    override fun getWeatherForLocationList(): Flow<List<Weather>> = flow {
-        emit(service.getWeatherList())
-    }.map { coins ->
-        coins.map { apiModel ->
-            convert(apiModel)
-        }
+    override fun getWeather(): Flow<List<Weather>> = flow {
+        emit(service.getWeather())
+    }.map {
+        convertToList(it)
     }.catch {
         throw UseCaseException.WeatherException(it)
     }
 
-    override fun getWeatherForLocation(lat: Double?, lon: Double?): Flow<Weather> = flow {
-        emit(service.getWeather(lat, lon))
+    override fun getWeatherCityAndCountryCode(cityAndCountryCode: String?): Flow<Weather> = flow {
+        emit(service.getWeatherByLocation(cityAndCountryCode))
     }.map {
         convert(it)
     }.catch {
@@ -57,6 +55,11 @@ class RemoteWeatherDataSourceImpl @Inject constructor(
             convertWeather(model.weather),
             convertWind(model.wind)
         )
+
+    private fun convertToList(model: WeatherModel) =
+        List(1) {
+            convert(model)
+        }
 
     private fun convertClouds(clouds: Clouds?) = com.kryptopass.domain.entity.weather.Clouds(
         clouds?.all
@@ -84,7 +87,7 @@ class RemoteWeatherDataSourceImpl @Inject constructor(
             WeatherItem(
                 it?.description, it?.icon, it?.id, it?.main
             )
-    }
+        }
 
     private fun convertWind(wind: Wind?) = com.kryptopass.domain.entity.weather.Wind(
         wind?.deg, wind?.speed

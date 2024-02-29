@@ -5,7 +5,7 @@ import com.kryptopass.common.nav.LocationInput
 import com.kryptopass.common.nav.NavRoutes
 import com.kryptopass.common.state.MviViewModel
 import com.kryptopass.common.state.UiState
-import com.kryptopass.domain.usecase.GetWeatherForLocationListUseCase
+import com.kryptopass.domain.usecase.GetWeatherListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -13,9 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherListViewModel @Inject constructor(
-    private val useCase: GetWeatherForLocationListUseCase,
+    private val useCase: GetWeatherListUseCase,
     private val converter: WeatherListConverter
-): MviViewModel<WeatherListModel, UiState<WeatherListModel>, WeatherListUiAction, WeatherListUiSingleEvent>() {
+) : MviViewModel<WeatherListModel, UiState<WeatherListModel>, WeatherListUiAction, WeatherListUiSingleEvent>() {
 
     override fun initState(): UiState<WeatherListModel> = UiState.Loading
 
@@ -39,7 +39,7 @@ class WeatherListViewModel @Inject constructor(
 
     private fun loadLaunches() {
         viewModelScope.launch {
-            useCase.execute(GetWeatherForLocationListUseCase.Request)
+            useCase.execute(GetWeatherListUseCase.Request)
                 .map {
                     converter.convert(it)
                 }

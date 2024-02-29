@@ -25,47 +25,45 @@ class LocalWeatherDataSourceImplTest {
     private val dao = mock<WeatherDao>()
     private val dataSource = LocalWeatherDataSourceImpl(dao)
 
+    private val city = "Atlanta"
+
     @Test
     fun testGetWeatherList() = runTest {
-        val lat = 100.0
-        val lon = 100.0
         val weatherList = listOf(
             WeatherEntity(
-                null, "Base1", Clouds(), 1, Coordinate(lat, lon), 2, 3,
-                Main(), "Name1", Rain(), Sys(), 4, 5, listOf(Weather()), Wind()
+                null, "Base1", Clouds(), 1, Coordinate(), 2, 3,
+                Main(), city, Rain(), Sys(), 4, 5, listOf(Weather()), Wind()
             )
         )
         val expectedWeatherList = listOf(
             Weather(
-                "Base1", Clouds(), 1, Coordinate(lat, lon), 2, 3, Main(),
-                "Name1", Rain(), Sys(), 4, 5, listOf(WeatherItem()), Wind()
+                "Base1", Clouds(), 1, Coordinate(), 2, 3, Main(),
+                city, Rain(), Sys(), 4, 5, listOf(WeatherItem()), Wind()
             )
         )
 
         whenever(dao.getWeatherForLocationList()).thenReturn(flowOf(weatherList))
-        val result = dataSource.getWeatherForLocationList().first()
+        val result = dataSource.getWeatherList().first()
 
         assertEquals(expectedWeatherList, result)
     }
 
     @Test
     fun testAddWeatherList() = runTest {
-        val lat = 100.0
-        val lon = 100.0
         val localWeatherList = listOf(
             WeatherEntity(
-                null, "Base1", Clouds(), 1, Coordinate(lat, lon), 2, 3,
-                Main(), "Name1", Rain(), Sys(), 4, 5, listOf(Weather()), Wind()
+                null, "Base1", Clouds(), 1, Coordinate(), 2, 3,
+                Main(), city, Rain(), Sys(), 4, 5, listOf(Weather()), Wind()
             )
         )
         val weatherList = listOf(
             Weather(
-                "Base1", Clouds(), 1, Coordinate(lat, lon), 2, 3, Main(),
-                "Name1", Rain(), Sys(), 4, 5, listOf(WeatherItem()), Wind()
+                "Base1", Clouds(), 1, Coordinate(), 2, 3, Main(),
+                city, Rain(), Sys(), 4, 5, listOf(WeatherItem()), Wind()
             )
         )
 
-        dataSource.addWeatherForLocation(weatherList)
+        dataSource.addWeatherForCityAndCountryCode(weatherList)
 
         verify(dao).insertWeatherList(localWeatherList)
     }

@@ -2,7 +2,6 @@ package com.kryptopass.data.repo
 
 import com.kryptopass.data.repo.source.local.LocalWeatherDataSource
 import com.kryptopass.data.repo.source.remote.RemoteWeatherDataSource
-import com.kryptopass.domain.entity.weather.Coordinate
 import com.kryptopass.domain.entity.weather.Weather
 import com.kryptopass.domain.repo.WeatherRepository
 import kotlinx.coroutines.flow.Flow
@@ -13,13 +12,13 @@ class WeatherRepositoryImpl(
     private val localSource: LocalWeatherDataSource
 ): WeatherRepository {
 
-    override fun getWeatherForLocationList(): Flow<List<Weather>> =
-        remoteSource.getWeatherForLocationList().onEach {
-            localSource.addWeatherForLocation(it)
+    override fun getWeatherList(): Flow<List<Weather>> =
+        remoteSource.getWeather().onEach {
+            localSource.addWeatherForCityAndCountryCode(it)
         }
 
-    override fun getWeatherByLocation(coordinate: Coordinate): Flow<Weather?> =
-        remoteSource.getWeatherForLocation(coordinate.lat, coordinate.lon).onEach {
-            localSource.addWeatherForLocation(listOf(it))
+    override fun getWeatherByCityAndCountryCode(cityAndCountryCode: String): Flow<Weather?> =
+        remoteSource.getWeatherCityAndCountryCode(cityAndCountryCode).onEach {
+            localSource.addWeatherForCityAndCountryCode(listOf(it))
         }
 }

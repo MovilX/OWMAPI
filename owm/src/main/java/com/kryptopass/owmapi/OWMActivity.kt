@@ -7,12 +7,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.kryptopass.common.nav.NavRoutes
 import com.kryptopass.owmapi.ui.list.WeatherListScreen
+import com.kryptopass.owmapi.ui.single.WeatherScreen
 import com.kryptopass.owmapi.ui.theme.FirstMapTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +31,7 @@ class OWMActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    WeatherListScreen(hiltViewModel())
+                    App(navController = rememberNavController())
                 }
             }
         }
@@ -35,17 +39,19 @@ class OWMActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FirstMapTheme {
-        Greeting("Android")
+fun App(navController: NavHostController) {
+    NavHost(navController, startDestination = NavRoutes.Locations.route) {
+        composable(route = NavRoutes.Locations.route) {
+            WeatherListScreen(hiltViewModel(), navController)
+        }
+        composable(
+            route = NavRoutes.Location.route,
+            arguments = NavRoutes.Location.arguments
+        ) {
+            WeatherScreen(
+                hiltViewModel(),
+                NavRoutes.Location.fromEntry(it)
+            )
+        }
     }
 }

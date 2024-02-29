@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalWeatherDataSource {
 
-    fun getWeatherForLocationList(): Flow<List<Weather>>
+    fun getWeatherList(): Flow<List<Weather>>
 
-    suspend fun addWeatherForLocation(weathers: List<Weather>)
+    suspend fun addWeatherForCityAndCountryCode(weathers: List<Weather>)
 }

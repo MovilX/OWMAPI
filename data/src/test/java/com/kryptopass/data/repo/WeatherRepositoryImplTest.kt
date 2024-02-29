@@ -24,35 +24,35 @@ class WeatherRepositoryImplTest {
     private val localSource = mock<LocalWeatherDataSource>()
     private val repo = WeatherRepositoryImpl(remoteSource, localSource)
 
+    private val city = "Zocca"
+
     @Test
     fun testGetWeatherList() = runTest {
         val weatherList = listOf(
             Weather(
-                "Base1", Clouds(), 1, Coordinate(), 2, 3, Main(), "Name1",
+                "Base1", Clouds(), 1, Coordinate(), 2, 3, Main(), city,
                 Rain(), Sys(), 4, 5, listOf(), Wind()
             )
         )
 
-        whenever(remoteSource.getWeatherForLocationList()).thenReturn(flowOf(weatherList))
-        val result = repo.getWeatherForLocationList().first()
+        whenever(remoteSource.getWeather()).thenReturn(flowOf(weatherList))
+        val result = repo.getWeatherList().first()
 
         assertEquals(weatherList, result)
-        verify(localSource).addWeatherForLocation(weatherList)
+        verify(localSource).addWeatherForCityAndCountryCode(weatherList)
     }
 
     @Test
     fun testGetWeather() = runTest {
-        val lat = 100.0
-        val lon = 100.0
         val weather = Weather(
-            "Base1", Clouds(), 1, Coordinate(lat, lon), 2, 3, Main(), "Name1",
+            "Base1", Clouds(), 1, Coordinate(), 2, 3, Main(), city,
             Rain(), Sys(), 4, 5, listOf(), Wind()
         )
 
-        whenever(remoteSource.getWeatherForLocation(lat, lon)).thenReturn(flowOf(weather))
-        val result = repo.getWeatherByLocation(Coordinate(lat, lon)).first()
+        whenever(remoteSource.getWeatherCityAndCountryCode(city)).thenReturn(flowOf(weather))
+        val result = repo.getWeatherByCityAndCountryCode(city).first()
 
         assertEquals(weather, result)
-        verify(localSource).addWeatherForLocation(listOf(weather))
+        verify(localSource).addWeatherForCityAndCountryCode(listOf(weather))
     }
 }

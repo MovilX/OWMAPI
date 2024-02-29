@@ -10,9 +10,13 @@
 
 ## API
 
-- https://api.openweathermap.org/data/
-- 2.5/weather?lat=44.34&lon=10.99
-- &appid=get_your_own
+- https://api.openweathermap.org/data/2.5/
+- weather?lat=44.34&lon=10.99&appid=get_your_own
+- weather?q=London,uk&appid=get_your_own
+- https://api.openweathermap.org/data/2.5/weather?q=atlanta&appid=2a611f42fd0dd58aaec8475df6426c6b
+- https://api.openweathermap.org/data/2.5/weather?q=zocca&appid=2a611f42fd0dd58aaec8475df6426c6b
+- https://api.openweathermap.org/data/2.5/weather?q=london,uk&appid=2a611f42fd0dd58aaec8475df6426c6b
+- https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=2a611f42fd0dd58aaec8475df6426c6b
 
 ## [Firebase](https://console.firebase.google.com/u/0/project/firstmap-54770/overview)
 
