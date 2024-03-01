@@ -13,9 +13,7 @@ class WeatherRepositoryImpl(
 ): WeatherRepository {
 
     override fun getWeatherList(): Flow<List<Weather>> =
-        remoteSource.getWeather().onEach {
-            localSource.addWeatherForCityAndCountryCode(it)
-        }
+        localSource.getWeatherList()
 
     override fun getWeatherByCityAndCountryCode(cityAndCountryCode: String): Flow<Weather?> =
         remoteSource.getWeatherCityAndCountryCode(cityAndCountryCode).onEach {

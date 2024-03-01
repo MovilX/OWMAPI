@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
@@ -79,7 +80,12 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("com.google.android.gms:play-services-location:21.1.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.dagger:hilt-android:2.50")
+    implementation("com.google.maps.android:maps-compose:2.11.5")
+    implementation("com.google.maps.android:maps-ktx:3.3.0")
+    implementation("com.google.maps.android:maps-utils-ktx:3.0.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     implementation(platform("androidx.compose:compose-bom:2024.02.01"))

@@ -13,8 +13,8 @@ import com.kryptopass.domain.entity.weather.Wind
 
 @Entity(tableName = "weather")
 data class WeatherEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") val id: Long? = 0,
+    @PrimaryKey
+    @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "base") val base: String? = null,
     @ColumnInfo(name = "clouds") val clouds: Clouds? = null,
     @ColumnInfo(name = "cod") val cod: Int? = null,
@@ -22,7 +22,6 @@ data class WeatherEntity(
     @ColumnInfo(name = "dt") val dt: Int? = null,
     @ColumnInfo(name = "weatherId") val weatherId: Int? = null,
     @ColumnInfo(name = "main") val main: Main? = null,
-    @ColumnInfo(name = "name") val name: String? = null,
     @ColumnInfo(name = "rain") val rain: Rain? = null,
     @ColumnInfo(name = "sys") val sys: Sys? = null,
     @ColumnInfo(name = "timezone") val timezone: Int? = null,

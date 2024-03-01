@@ -1,6 +1,7 @@
 package com.kryptopass.owmapi.di
 
 import com.kryptopass.domain.repo.WeatherRepository
+import com.kryptopass.domain.usecase.GetWeatherByCityAndCountryCodeUseCase
 import com.kryptopass.domain.usecase.GetWeatherListUseCase
 import com.kryptopass.domain.usecase.UseCase
 import dagger.Module
@@ -21,6 +22,15 @@ class UseCaseModule {
         configuration: UseCase.Configuration,
         weatherRepo: WeatherRepository
     ): GetWeatherListUseCase = GetWeatherListUseCase(
+        configuration,
+        weatherRepo
+    )
+
+    @Provides
+    fun provideGetWeatherByCityAndCountryCodeUseCase(
+        configuration: UseCase.Configuration,
+        weatherRepo: WeatherRepository
+    ): GetWeatherByCityAndCountryCodeUseCase = GetWeatherByCityAndCountryCodeUseCase(
         configuration,
         weatherRepo
     )

@@ -29,7 +29,7 @@ class WeatherListViewModel @Inject constructor(
                 submitSingleEvent(
                     WeatherListUiSingleEvent.OpenWeatherScreen(
                         NavRoutes.Location.routeForLocation(
-                            LocationInput(action.lat, action.lon)
+                            LocationInput(action.cityAndCountryCode)
                         )
                     )
                 )

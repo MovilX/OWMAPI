@@ -29,31 +29,7 @@ class RemoteWeatherDataSourceImplTest {
     private val city = "Zocca"
 
     @Test
-    fun testGetWeatherList() = runTest {
-        val remoteLaunches =
-            WeatherModel(
-                "Base", com.kryptopass.data.remote.networking.model.Clouds(), 1,
-                Coord(), 2, 3, com.kryptopass.data.remote.networking.model.Main(),
-                city, com.kryptopass.data.remote.networking.model.Rain(),
-                com.kryptopass.data.remote.networking.model.Sys(), 4, 5, listOf(),
-                com.kryptopass.data.remote.networking.model.Wind()
-            )
-
-        val expectedLaunches = listOf(
-            Weather(
-                "Base", Clouds(), 1, Coordinate(), 2, 3, Main(),
-                city, Rain(), Sys(), 4, 5, listOf(), Wind()
-            )
-        )
-
-        whenever(service.getWeather()).thenReturn(remoteLaunches)
-        val result = dataSource.getWeather().first()
-
-        assertEquals(expectedLaunches, result)
-    }
-
-    @Test
-    fun testGetWeather() = runTest {
+    fun testGetWeatherByLocation() = runTest {
         val remoteWeather = WeatherModel(
             "Base", com.kryptopass.data.remote.networking.model.Clouds(), 1,
             Coord(), 2, 3, com.kryptopass.data.remote.networking.model.Main(),
@@ -73,10 +49,10 @@ class RemoteWeatherDataSourceImplTest {
     }
 
     @Test
-    fun testGetWeatherListThrowsError() = runTest {
-        whenever(service.getWeather()).thenThrow(RuntimeException())
+    fun testGetWeatherThrowsError() = runTest {
+        whenever(service.getWeatherByLocation(city)).thenThrow(RuntimeException())
 
-        dataSource.getWeather().catch {
+        dataSource.getWeatherCityAndCountryCode(city).catch {
             TestCase.assertTrue(it is UseCaseException.WeatherException)
         }
     }

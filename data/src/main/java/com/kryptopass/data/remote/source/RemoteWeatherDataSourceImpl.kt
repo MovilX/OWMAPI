@@ -22,14 +22,6 @@ class RemoteWeatherDataSourceImpl @Inject constructor(
     private val service: WeatherService
 ) : RemoteWeatherDataSource {
 
-    override fun getWeather(): Flow<List<Weather>> = flow {
-        emit(service.getWeather())
-    }.map {
-        convertToList(it)
-    }.catch {
-        throw UseCaseException.WeatherException(it)
-    }
-
     override fun getWeatherCityAndCountryCode(cityAndCountryCode: String?): Flow<Weather> = flow {
         emit(service.getWeatherByLocation(cityAndCountryCode))
     }.map {
@@ -47,7 +39,7 @@ class RemoteWeatherDataSourceImpl @Inject constructor(
             model.dt,
             model.id,
             convertMain(model.main),
-            model.name,
+            model.name ?: "Zocca",
             convertRain(model.rain),
             convertSys(model.sys),
             model.timezone,

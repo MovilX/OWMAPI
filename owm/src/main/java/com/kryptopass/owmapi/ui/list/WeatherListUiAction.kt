@@ -6,5 +6,5 @@ import com.kryptopass.common.state.UiAction
 sealed class WeatherListUiAction : UiAction {
 
     data object Load : WeatherListUiAction()
-    data class OnItemClick(val lat: Double?, val lon: Double?) : WeatherListUiAction()
+    data class OnItemClick(val cityAndCountryCode: String) : WeatherListUiAction()
 }

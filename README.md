@@ -28,3 +28,4 @@
 - [Google Console](https://console.cloud.google.com/welcome?pli=1&project=bitrisedemo-8ffc6)
 - [Cloud Marketplace](https://console.cloud.google.com/marketplace)
 - [Credentials](https://console.cloud.google.com/apis/credentials?project=bitrisedemo-8ffc6)
+- [Latitude and Longitude Finder](https://www.latlong.net/)

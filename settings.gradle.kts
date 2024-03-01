@@ -6,7 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "FirstMap"
+rootProject.name = "OWM API"
 include(":app")
 include(":owm")
 include(":data")

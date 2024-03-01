@@ -31,8 +31,8 @@ class LocalWeatherDataSourceImplTest {
     fun testGetWeatherList() = runTest {
         val weatherList = listOf(
             WeatherEntity(
-                null, "Base1", Clouds(), 1, Coordinate(), 2, 3,
-                Main(), city, Rain(), Sys(), 4, 5, listOf(Weather()), Wind()
+                city, "Base1", Clouds(), 1, Coordinate(), 2, 3,
+                Main(), Rain(), Sys(), 4, 5, listOf(), Wind()
             )
         )
         val expectedWeatherList = listOf(
@@ -42,7 +42,7 @@ class LocalWeatherDataSourceImplTest {
             )
         )
 
-        whenever(dao.getWeatherForLocationList()).thenReturn(flowOf(weatherList))
+        whenever(dao.getWeatherForLocations()).thenReturn(flowOf(weatherList))
         val result = dataSource.getWeatherList().first()
 
         assertEquals(expectedWeatherList, result)
@@ -52,8 +52,8 @@ class LocalWeatherDataSourceImplTest {
     fun testAddWeatherList() = runTest {
         val localWeatherList = listOf(
             WeatherEntity(
-                null, "Base1", Clouds(), 1, Coordinate(), 2, 3,
-                Main(), city, Rain(), Sys(), 4, 5, listOf(Weather()), Wind()
+                city, "Base1", Clouds(), 1, Coordinate(), 2, 3,
+                Main(), Rain(), Sys(), 4, 5, listOf(), Wind()
             )
         )
         val weatherList = listOf(

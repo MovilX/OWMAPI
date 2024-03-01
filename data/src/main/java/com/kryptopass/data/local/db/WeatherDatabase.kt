@@ -10,7 +10,7 @@ import com.kryptopass.data.local.db.weather.WeatherEntity
     entities = [
         WeatherEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(WeatherConverters::class)

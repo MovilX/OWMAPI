@@ -8,7 +8,7 @@ data class Weather(
     val dt: Int? = null,
     val id: Int? = null,
     val main: Main? = null,
-    val name: String? = null,
+    val name: String,
     val rain: Rain? = null,
     val sys: Sys? = null,
     val timezone: Int? = null,

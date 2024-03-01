@@ -44,7 +44,7 @@ fun WeatherListScreen(
                 WeatherList(it) { item ->
                     viewModel.submitAction(
                         WeatherListUiAction.OnItemClick(
-                            item.coordinate?.lat, item.coordinate?.lon
+                            item.name
                         )
                     )
                 }
@@ -56,7 +56,7 @@ fun WeatherListScreen(
         viewModel.singleEventFlow.collectLatest {
             when (it) {
                 is WeatherListUiSingleEvent.OpenWeatherScreen -> {
-                    navController.navigate(it.navRoute)
+                    navController.navigate(it.navRoute ?: "")
                 }
             }
         }
@@ -91,8 +91,8 @@ fun WeatherItem(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = if (index % 2 == 0) Color(0xFFF0F8FF) else Color(0xFF020035),
-            contentColor = if (index % 2 == 0) Color(0xFF020035) else Color(0xFFF0F8FF)
+            containerColor = Color(0xFF020035),
+            contentColor = Color(0xFFF0F8FF)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         shape = MaterialTheme.shapes.large,
@@ -113,34 +113,47 @@ fun WeatherItemRow(item: WeatherItemModel) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        //val flightDetails = launchItemHelper(item)
-//        AsyncImage(
-//            model = ImageRequest.Builder(LocalContext.current)
-//                .data(item.links?.missionPatch)
-//                .crossfade(true)
-//                .size(Size(120, 120))
-//                .scale(Scale.FIT)
-//                .precision(Precision.EXACT)
-//                .build(),
-//            contentDescription = null
-//        )
         Column {
-            Text(
-                text = item.name ?: "No Name",
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Text(
-                text = item.clouds?.all.toString(),
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Text(
-                text = item.coordinate?.lat.toString(),
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Text(
-                text = item.coordinate?.lon.toString(),
-                style = MaterialTheme.typography.bodyMedium
-            )
+            Row {
+                Text(
+                    text = "City: ",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = item.name,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+            Row {
+                Text(
+                    text = "Clouds: ",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = item.clouds?.all.toString(),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+            Row {
+                Text(
+                    text = "Latitude: ",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = item.coordinate?.lat.toString(),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+            Row {
+                Text(
+                    text = "Longitude: ",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = item.coordinate?.lon.toString(),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
         }
     }
 }

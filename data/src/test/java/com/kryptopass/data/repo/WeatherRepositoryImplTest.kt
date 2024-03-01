@@ -27,22 +27,6 @@ class WeatherRepositoryImplTest {
     private val city = "Zocca"
 
     @Test
-    fun testGetWeatherList() = runTest {
-        val weatherList = listOf(
-            Weather(
-                "Base1", Clouds(), 1, Coordinate(), 2, 3, Main(), city,
-                Rain(), Sys(), 4, 5, listOf(), Wind()
-            )
-        )
-
-        whenever(remoteSource.getWeather()).thenReturn(flowOf(weatherList))
-        val result = repo.getWeatherList().first()
-
-        assertEquals(weatherList, result)
-        verify(localSource).addWeatherForCityAndCountryCode(weatherList)
-    }
-
-    @Test
     fun testGetWeather() = runTest {
         val weather = Weather(
             "Base1", Clouds(), 1, Coordinate(), 2, 3, Main(), city,

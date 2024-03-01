@@ -14,7 +14,7 @@ class LocalWeatherDataSourceImpl @Inject constructor(
 ) : LocalWeatherDataSource {
 
     override fun getWeatherList(): Flow<List<Weather>> =
-        dao.getWeatherForLocationList().map {
+        dao.getWeatherForLocations().map {
             it.map { model ->
                 Weather(
                     model.base, model.clouds, model.cod, model.coordinate, model.dt,
@@ -27,9 +27,9 @@ class LocalWeatherDataSourceImpl @Inject constructor(
     override suspend fun addWeatherForCityAndCountryCode(weathers: List<Weather>) =
         dao.insertWeatherList(weathers.map { weather ->
             WeatherEntity(
-                null, weather.base, weather.clouds, weather.cod, weather.coordinate,
-                weather.dt, weather.id, weather.main, weather.name, weather.rain,
-                weather.sys, weather.timezone, weather.visibility, listOf(Weather()), weather.wind
+                weather.name, weather.base, weather.clouds, weather.cod, weather.coordinate,
+                weather.dt, weather.id, weather.main, weather.rain,
+                weather.sys, weather.timezone, weather.visibility, listOf(), weather.wind
             )
         })
 }
