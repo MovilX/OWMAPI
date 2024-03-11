@@ -25,3 +25,5 @@ proguard
 *.hprof
 
 firebase-tools-instant-win.exe
+
+*.json
