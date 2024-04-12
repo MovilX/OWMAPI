@@ -13,7 +13,6 @@ var mapsKey: String = ""
 if (File("local.properties").exists()) {
     properties = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
     mapsKey = properties.getProperty("GOOGLE_MAPS_ANDROID_KEY")
-
 } else {
     mapsKey = System.getenv("GOOGLE_MAPS_ANDROID_KEY")
 }
@@ -71,7 +70,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.maps.android:maps-ktx:3.3.0")
+    implementation("com.google.maps.android:maps-ktx:3.4.0")
     implementation("com.google.maps.android:maps-utils-ktx:3.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
