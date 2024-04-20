@@ -1,12 +1,13 @@
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
-    id("com.google.gms.google-services")
-    kotlin("android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.daggerHiltAndroid)
+    alias(libs.plugins.devtoolsKsp)
+    alias(libs.plugins.firebaseCrashlytics)
+    alias(libs.plugins.gmsGoogleServices)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.secretsGradlePlugin)
 }
 
 var properties = Properties()
@@ -61,7 +62,7 @@ android {
         jvmTarget = "17"
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
@@ -75,37 +76,39 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-    implementation("com.google.android.gms:play-services-location:21.2.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.dagger:hilt-android:2.50")
-    implementation("com.google.maps.android:maps-compose:2.11.5")
-    implementation("com.google.maps.android:maps-ktx:3.3.0")
-    implementation("com.google.maps.android:maps-utils-ktx:3.0.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.lifecycle.runtime)
 
-    implementation(platform("androidx.compose:compose-bom:2024.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
 
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
-    ksp("com.google.dagger:hilt-compiler:2.50")
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.hilt.android)
+    implementation(libs.maps.compose)
+    implementation(libs.maps.ktx)
+    implementation(libs.maps.utils.ktx)
+    implementation(libs.play.services.location)
+    implementation(libs.play.services.maps)
 
-    testImplementation("junit:junit:4.13.2")
+    ksp(libs.hilt.compiler)
 
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation(libs.junit)
 
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }

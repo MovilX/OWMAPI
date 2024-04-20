@@ -1,10 +1,10 @@
 import java.util.Properties
 
 plugins {
-    id("com.android.library")
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
-    kotlin("android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.daggerHiltAndroid)
+    alias(libs.plugins.devtoolsKsp)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
 var properties = Properties()
@@ -15,7 +15,7 @@ if (File("local.properties").exists()) {
     owmApiKey = properties.getProperty("OWM_API_KEY")
 
 } else {
-    owmApiKey = System.getenv("OWM_API_KEY")
+    System.getenv("OWM_API_KEY")
 }
 
 android {
@@ -55,26 +55,28 @@ android {
 dependencies {
     implementation(project(":domain"))
 
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.dagger:hilt-android:2.50")
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core)
+    implementation(libs.material)
 
-    ksp("androidx.room:room-compiler:2.6.1")
-    ksp("com.google.dagger:hilt-compiler:2.50")
+    implementation(libs.hilt.android)
+    implementation(libs.gson)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.work.runtime)
 
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.room.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

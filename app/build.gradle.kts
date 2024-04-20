@@ -1,10 +1,10 @@
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    id("com.google.gms.google-services")
-    kotlin("android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.gmsGoogleServices)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.secretsGradlePlugin)
 }
 
 var properties = Properties()
@@ -65,17 +65,17 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.lifecycle.runtime)
 
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.maps.android:maps-ktx:3.4.0")
-    implementation("com.google.maps.android:maps-utils-ktx:3.0.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation(libs.gson)
+    implementation(libs.maps.ktx)
+    implementation(libs.maps.utils.ktx)
+    implementation(libs.play.services.maps)
 
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.junit)
 }
