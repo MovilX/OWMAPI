@@ -38,15 +38,24 @@ fun WeatherListScreen(
         CommonScreen(state = state) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                //WeatherScreenHeader()
-                WeatherList(it) { item ->
-                    viewModel.submitAction(
-                        WeatherListUiAction.OnItemClick(
-                            item.name
-                        )
+                if (it.items.isEmpty()) {
+                    Text(
+                        text = "No data available.",
+                        style = MaterialTheme.typography.headlineMedium,
+                        modifier = Modifier.padding(16.dp)
                     )
+                } else {
+                    WeatherList(it) { item ->
+                        viewModel.submitAction(
+                            WeatherListUiAction.OnItemClick(
+                                item.name
+                            )
+                        )
+                    }
                 }
             }
         }
