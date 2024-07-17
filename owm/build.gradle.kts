@@ -1,13 +1,14 @@
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.daggerHiltAndroid)
-    alias(libs.plugins.devtoolsKsp)
-    alias(libs.plugins.firebaseCrashlytics)
-    alias(libs.plugins.gmsGoogleServices)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.secretsGradlePlugin)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.gms.google.services)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 var properties = Properties()
@@ -62,7 +63,7 @@ android {
         jvmTarget = "17"
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources {

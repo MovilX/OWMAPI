@@ -19,7 +19,7 @@ class MarkerInfoWindowAdapter(
         val view = LayoutInflater.from(context).inflate(R.layout.marker_info_contents, null)
         view.findViewById<TextView>(R.id.text_view_title).text = place.name
         view.findViewById<TextView>(R.id.text_view_address).text = place.address
-        view.findViewById<TextView>(R.id.text_view_rating).text = "Rating: %.2f".format(place.rating)
+        view.findViewById<TextView>(R.id.text_view_rating).text = "Rating: %.2f".format(place.zIndex)
 
         return view
     }

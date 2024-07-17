@@ -1,35 +1,35 @@
 [versions]
 activityCompose = "1.9.0"
-agp = "8.4.1"
+agp = "8.5.1"
 appcompat = "1.7.0"
 coilCompose = "2.6.0"
-composeBom = "2024.05.00"
-converterGson = "2.9.0"
+composeBom = "2024.06.00"
+converterGson = "2.11.0"
 core = "1.13.1"
-espressoCore = "3.5.1"
-firebaseBom = "33.1.0"
-firebaseCrashlytics= "3.0.1"
+espressoCore = "3.6.1"
+firebaseBom = "33.1.2"
+firebaseCrashlytics= "3.0.2"
 googleServices = "4.4.2"
 gson = "2.10.1"
-hilt = "2.50"
+hilt = "2.51.1"
 hiltNav = "1.2.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-kotlin = "1.9.23"
+junitVersion = "1.2.1"
+kotlin = "2.0.0"
 kotlinxCoroutinesTest = "1.8.1"
-kspCompiler = "1.9.23-1.0.19"
-lifecycle = "2.8.1"
+kspCompiler = "2.0.0-1.0.21"
+lifecycle = "2.8.3"
 loggingInterceptor = "4.12.0"
-maps = "3.4.0"
-mapsCompose = "2.11.5"
-mapsUtils = "3.0.0"
+maps = "5.0.0"
+mapsCompose = "4.4.1"
+mapsUtils = "5.0.0"
 material = "1.12.0"
 mockitoKotlin = "5.2.1"
 nav = "2.7.7"
 okhttp = "4.12.0"
 playServicesLocation = "21.3.0"
-playServicesMaps = "18.2.0"
-retrofit = "2.9.0"
+playServicesMaps = "19.0.0"
+retrofit = "2.11.0"
 room = "2.6.1"
 secretsGradlePlugin = "2.0.1"
 work = "2.9.0"
@@ -77,11 +77,12 @@ play-services-maps = { module = "com.google.android.gms:play-services-maps", ver
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [plugins]
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
-daggerHiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "kspCompiler" }
-firebaseCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
-gmsGoogleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-secretsGradlePlugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspCompiler" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
+gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }

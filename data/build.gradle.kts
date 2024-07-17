@@ -1,10 +1,10 @@
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.daggerHiltAndroid)
-    alias(libs.plugins.devtoolsKsp)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 var properties = Properties()
