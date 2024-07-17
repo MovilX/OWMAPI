@@ -1,52 +1,79 @@
-name: Build and Test
+name: Continuous Integration
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main, dev ]
+
+  pull_request:
+    branches: [ main, dev ]
 
 jobs:
-  build:
-    name: Build
+  start:
     runs-on: ubuntu-latest
-    env:
-      name: 'production'
-      app: 'OWM API'
-      version: '1.0.0'
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+  lint:
+    name: Perform Lint Check
+    needs: [ start ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
 
-  unit-tests:
-    name: Unit/Instrumentation Tests
-    runs-on: macos-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup JAVA 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
 
-      - name: Grant gradlew permission
-        run: chmod +x gradlew
+      - name: Load Google Services file
+        env:
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $GOOGLE_SERVICES | base64 -di > app/google-services.json
 
       - name: Run lint
         run: ./gradlew lintDebug
 
-      - name: Run Unit Test
+      - name: Upload html test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint.html
+          path: app/build/reports/lint-results-debug.html
+
+  unit-test:
+    name: Perform Unit Testing
+    needs: [ lint ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JAVA 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Load Google Services file
+        env:
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $GOOGLE_SERVICES | base64 -di > app/google-services.json
+
+      - name: Run tests
         run: ./gradlew test
 
-      - name: Run Instrumented Tests
-        uses: reactivecircus/android-emulator-runner@v2
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
         with:
-          api-level: 29
-          script: ./gradlew connectedCheck
+          name: unit_test_report
+          path: app/build/reports/test/testDebugUnitTest/
+
+# TODO: other jobs to consider for continuous integration
+# Linting -> KtLint
+# Static Code Analysis -> SonarQube
+# Instrumentation Testing -> Firebase Test Lab
+# Sign APK
+# Keystore -> encrypt/decrypt keystore
