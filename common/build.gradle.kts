@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -33,7 +34,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 }
 

@@ -1,20 +1,10 @@
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.gmsGoogleServices)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.secretsGradlePlugin)
-}
-
-var properties = Properties()
-var mapsKey: String = ""
-
-if (File("local.properties").exists()) {
-    properties = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
-    mapsKey = properties.getProperty("GOOGLE_MAPS_ANDROID_KEY")
-} else {
-    mapsKey = System.getenv("GOOGLE_MAPS_ANDROID_KEY")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.gms.google.services)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
@@ -32,20 +22,29 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        lateinit var properties: Properties
+
+        var mapsKey: String = ""
+
+        if (File("local.properties").exists()) {
+            properties = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
+            mapsKey = properties.getProperty("GOOGLE_MAPS_ANDROID_KEY")
+        } else {
+            mapsKey = System.getenv("GOOGLE_MAPS_ANDROID_KEY")
+        }
+
+        buildConfigField("String", "GOOGLE_MAPS_ANDROID_KEY", "\"$mapsKey\"")
     }
     buildFeatures {
         buildConfig = true
     }
     buildTypes {
-        getByName("debug") {
-            buildConfigField("String", "GOOGLE_MAPS_ANDROID_KEY", "\"$mapsKey\"")
-        }
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
-            buildConfigField("String", "GOOGLE_MAPS_ANDROID_KEY", "\"$mapsKey\"")
         }
     }
     compileOptions {

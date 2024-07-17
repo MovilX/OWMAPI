@@ -23,5 +23,5 @@ fun PlaceResponse.toPlace(): Place = Place(
     name = name,
     latLng = LatLng(geometry.location.lat, geometry.location.lng),
     address = vicinity,
-    rating = rating
+    zIndex = rating
 )
